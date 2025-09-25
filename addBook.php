@@ -2,22 +2,25 @@
 require_once "library.php";
 $bookObj = new Library();
 
+//prepare variables
 $title = "";
 $author = "";
 $genre = "";
 $publication_year = "";
 $publisher = "";
 $copies = "";
-
+//error messages
 $error_title = "";
 $error_author = "";
 $error_genre = "";
+$error_publisher = "";
 $error_year = "";
 $error_copies = "";
-
+//submission messages
 $submit_error = "";
 $submit_success = "";
 
+//validation and form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST["title"];
     $author = $_POST["author"];
@@ -26,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $publisher = $_POST["publisher"];
     $copies = $_POST["copies"];
 
+    //sanitation
     if ($title == "") {
         $error_title = "Title is required";
     }
@@ -42,13 +46,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if ($publication_year > date("Y")) {
         $error_year = "Publication year must not be in the future";
     }
+    if($publisher == "") {
+        $error_publisher ="Book publisher is required";
+    }
     if ($copies == "") {
         $error_copies = "Copies is required";
     } else if (!is_numeric($copies)) {
         $error_copies = "Copies must be a number";
     }
 
-    if ($error_title == "" && $error_author == "" && $error_genre == "" && $error_year == "" && $error_copies == "") {
+    if ($error_title == "" && $error_author == "" && $error_genre == "" && $error_publisher = "" && $error_year == "" && $error_copies == "") {
         $viewBook = new Library();
         $duplicate = false;
 
@@ -103,8 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Publication Year *</label><br>
         <input type="text" name="publication_year" value="<?php echo $publication_year; ?>"><br>
         <span style="color:red"><?php echo $error_year; ?></span><br><br>
-        <label>Publisher</label><br>
+        <label>Publisher *</label><br>
         <input type="text" name="publisher" value="<?php echo $publisher; ?>"><br><br>
+        <span style="color:red"><?php echo $error_year; ?></span><br><br>
         <label>Copies *</label><br>
         <input type="text" name="copies" value="<?php echo $copies; ?>"><br>
         <span style="color:red"><?php echo $error_copies; ?></span><br><br>
