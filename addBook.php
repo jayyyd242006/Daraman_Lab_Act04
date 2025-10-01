@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_copies = "Copies must be a number";
     }
 
-    if ($error_title == "" && $error_author == "" && $error_genre == "" && $error_publisher = "" && $error_year == "" && $error_copies == "") {
+    if ($error_title == "" && $error_author == "" && $error_genre == "" && $error_publisher == "" && $error_year == "" && $error_copies == "") {
         $viewBook = new Library();
         $duplicate = false;
 
@@ -137,3 +137,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="viewBook.php">View Full Book List</a>
 </body>
 </html>
+
