@@ -5,14 +5,17 @@ $bookObj = new Library();
 $search = "";
 $filter_genre = "";
 
+
 if (isset($_GET["search"])) {
     $search = $_GET["search"];
 }
 if (isset($_GET["filter_genre"])) {
     $filter_genre = $_GET["filter_genre"];
 }
+
 $books = $bookObj->viewBook();
 $newBooks = [];
+
 foreach ($books as $b) {
     $matchSearch = true;
     $matchGenre = true;
@@ -31,6 +34,7 @@ foreach ($books as $b) {
     }
 }
 $books = $newBooks;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -60,6 +64,7 @@ $books = $newBooks;
             <th>Publication Year</th>
             <th>Publisher</th>
             <th>Copies</th>
+            <th>Action</th>
         </tr>
         <?php if (count($books) > 0): ?>
             <?php foreach ($books as $b): ?>
@@ -70,6 +75,15 @@ $books = $newBooks;
                     <td><?php echo $b["publication_year"]; ?></td>
                     <td><?php echo $b["publisher"]; ?></td>
                     <td><?php echo $b["copies"]; ?></td>
+                    
+            <td>
+            <a href="editBook.php?id=<?php echo $b['id']; ?>">Edit</a> | 
+            <a href="deleteBook.php?id=<?php echo $b['id']; ?>" 
+            onclick="return confirm('Are you sure you want to delete this book?');">
+            Delete
+                 </a>
+            </td>
+
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
